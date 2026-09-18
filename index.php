@@ -10,9 +10,17 @@ $hasil = mysqli_query($koneksi, "SELECT * FROM notes ORDER BY created_at DESC");
 </head>
 <body>
     <h1>Daftar Catatan</h1>
-<?php if (isset($_GET['status']) && $_GET['status'] == 'tambah'): ?>
-    <p style="color: green;">✅ Catatan berhasil ditambahkan!</p>
-<?php endif; ?>
+
+    <?php if (isset($_GET['status'])): ?>
+        <?php if ($_GET['status'] == 'tambah'): ?>
+            <p style="color: green;">✅ Catatan berhasil ditambahkan!</p>
+        <?php elseif ($_GET['status'] == 'update'): ?>
+            <p style="color: green;">✅ Catatan berhasil diperbarui!</p>
+        <?php elseif ($_GET['status'] == 'hapus'): ?>
+            <p style="color: green;">✅ Catatan berhasil dihapus!</p>
+        <?php endif; ?>
+    <?php endif; ?>
+
     <a href="tambah.php">+ Tambah Catatan</a>
 
     <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px;">
