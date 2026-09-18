@@ -4,8 +4,9 @@ require 'db_koneksi.php';
 $title = $_POST['title'];
 $content = $_POST['content'];
 
-$query = "INSERT INTO notes (title, content) VALUES ('$title', '$content')";
-mysqli_query($koneksi, $query);
+$stmt = mysqli_prepare($koneksi, "INSERT INTO notes (title, content) VALUES (?, ?)");
+mysqli_stmt_bind_param($stmt, "ss", $title, $content);
+mysqli_stmt_execute($stmt);
 
 header("Location: index.php?status=tambah");
 exit;

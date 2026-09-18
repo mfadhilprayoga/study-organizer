@@ -2,7 +2,11 @@
 require 'db_koneksi.php';
 
 $id = $_GET['id'];
-$hasil = mysqli_query($koneksi, "SELECT * FROM notes WHERE id = $id");
+
+$stmt = mysqli_prepare($koneksi, "SELECT * FROM notes WHERE id = ?");
+mysqli_stmt_bind_param($stmt, "i", $id);
+mysqli_stmt_execute($stmt);
+$hasil = mysqli_stmt_get_result($stmt);
 $catatan = mysqli_fetch_assoc($hasil);
 
 if (!$catatan) {

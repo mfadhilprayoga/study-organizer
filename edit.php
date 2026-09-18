@@ -2,7 +2,11 @@
 require 'db_koneksi.php';
 
 $id = $_GET['id'];
-$hasil = mysqli_query($koneksi, "SELECT * FROM notes WHERE id = $id");
+
+$stmt = mysqli_prepare($koneksi, "SELECT * FROM notes WHERE id = ?");
+mysqli_stmt_bind_param($stmt, "i", $id);
+mysqli_stmt_execute($stmt);
+$hasil = mysqli_stmt_get_result($stmt);
 $catatan = mysqli_fetch_assoc($hasil);
 
 if (!$catatan) {
@@ -20,13 +24,10 @@ if (!$catatan) {
 
     <form action="update.php" method="POST">
         <input type="hidden" name="id" value="<?= $catatan['id'] ?>">
-
         <label>Judul</label><br>
         <input type="text" name="title" value="<?= htmlspecialchars($catatan['title']) ?>" required><br><br>
-
         <label>Isi Catatan</label><br>
         <textarea name="content" rows="5" required><?= htmlspecialchars($catatan['content']) ?></textarea><br><br>
-
         <button type="submit">Update</button>
     </form>
 </body>
