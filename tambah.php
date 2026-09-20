@@ -2,7 +2,27 @@
 <html>
 <head>
     <title>Tambah Catatan</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+<script>
+document.querySelector('form').addEventListener('submit', function(event) {
+    const title = document.querySelector('input[name="title"]').value.trim();
+    const content = document.querySelector('textarea[name="content"]').value.trim();
+
+    if (title === '') {
+        alert('Judul tidak boleh kosong!');
+        event.preventDefault();
+        return;
+    }
+
+    if (content.length < 10) {
+        alert('Isi catatan minimal 10 karakter!');
+        event.preventDefault();
+        return;
+    }
+});
+</script>
+
 <body>
     <a href="index.php">← Kembali ke Beranda</a>
     <h1>Tambah Catatan Baru</h1>

@@ -1,5 +1,5 @@
 <?php
-require 'db_koneksi.php';
+require 'includes/db_koneksi.php';
 
 $id = $_GET['id'];
 
@@ -21,17 +21,21 @@ if (!$catatan) {
     die("Catatan tidak ditemukan.");
 }
 ?>
+<? include 'includes/header.php';?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Hapus Catatan</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Hapus Catatan?</h1>
-    <p>Apakah kamu yakin ingin menghapus catatan "<?= htmlspecialchars($catatan['title']) ?>"?</p>
-    <form action="hapus.php?id=<?= $catatan['id'] ?>" method="POST">
+    <div class="confirm-box">
+    <   h1>Hapus Catatan?</h1>
+        <p>Apakah kamu yakin ingin menghapus catatan "<?= htmlspecialchars($catatan['title']) ?>"?</p>
+        <form action="hapus.php?id=<?= $catatan['id'] ?>" method="POST">
         <a href="index.php">Batal</a>
         <button type="submit">Hapus</button>
     </form>
+    </div>
 </body>
 </html>

@@ -1,36 +1,78 @@
 <?php
-require 'db_koneksi.php';
+require 'includes/db_koneksi.php';
 
-$hasil = mysqli_query($koneksi, "SELECT * FROM notes ORDER BY created_at DESC");
+$per_halaman = 6;
+$halaman = isset($_GET['halaman']) ? (int) $_GET['halaman'] : 1;
+$offset = ($halaman - 1) * $per_halaman;
+
+if (isset($_GET['cari']) && $_GET['cari'] !== '') {
+    $keyword = '%' . $_GET['cari'] . '%';
+    $stmt = mysqli_prepare($koneksi, "SELECT * FROM notes WHERE title LIKE ? ORDER BY created_at DESC LIMIT ? OFFSET ?");
+    mysqli_stmt_bind_param($stmt, "sii", $keyword, $per_halaman, $offset);
+    mysqli_stmt_execute($stmt);
+    $hasil = mysqli_stmt_get_result($stmt);
+
+    $stmtTotal = mysqli_prepare($koneksi, "SELECT COUNT(*) as total FROM notes WHERE title LIKE ?");
+    mysqli_stmt_bind_param($stmtTotal, "s", $keyword);
+} else {
+    $stmt = mysqli_prepare($koneksi, "SELECT * FROM notes ORDER BY created_at DESC LIMIT ? OFFSET ?");
+    mysqli_stmt_bind_param($stmt, "ii", $per_halaman, $offset);
+    mysqli_stmt_execute($stmt);
+    $hasil = mysqli_stmt_get_result($stmt);
+
+    $stmtTotal = mysqli_prepare($koneksi, "SELECT COUNT(*) as total FROM notes");
+}
+
+mysqli_stmt_execute($stmtTotal);
+$hasilTotal = mysqli_stmt_get_result($stmtTotal);
+$totalCatatan = mysqli_fetch_assoc($hasilTotal)['total'];
+$totalHalaman = ceil($totalCatatan / $per_halaman);
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Catatan Kuliah</title>
-</head>
-<body>
-    <h1>Daftar Catatan</h1>
+<?php include 'includes/header.php'; ?>
 
-    <?php if (isset($_GET['status'])): ?>
+<h1>Daftar Catatan</h1>
+
+<?php if (isset($_GET['status'])): ?>
+    <div id="flash-message" class="flash">
         <?php if ($_GET['status'] == 'tambah'): ?>
-            <p style="color: green;">✅ Catatan berhasil ditambahkan!</p>
+            ✅ Catatan berhasil ditambahkan!
         <?php elseif ($_GET['status'] == 'update'): ?>
-            <p style="color: green;">✅ Catatan berhasil diperbarui!</p>
+            ✅ Catatan berhasil diperbarui!
         <?php elseif ($_GET['status'] == 'hapus'): ?>
-            <p style="color: green;">✅ Catatan berhasil dihapus!</p>
+            ✅ Catatan berhasil dihapus!
         <?php endif; ?>
-    <?php endif; ?>
-
-    <a href="tambah.php">+ Tambah Catatan</a>
-
-    <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px;">
-        <?php while ($row = mysqli_fetch_assoc($hasil)): ?>
-            <div style="border: 1px solid #ccc; padding: 15px; width: 250px;">
-                <h3><?= htmlspecialchars($row['title']) ?></h3>
-                <p><?= htmlspecialchars(substr($row['content'], 0, 60)) ?>...</p>
-                <a href="detail.php?id=<?= $row['id'] ?>">Baca Selengkapnya</a>
-            </div>
-        <?php endwhile; ?>
     </div>
-</body>
-</html>
+<?php endif; ?>
+<form action="index.php" method="GET" style="margin-bottom: 15px;">
+    <input type="text" name="cari" placeholder="Cari judul catatan..." value="<?= isset($_GET['cari']) ? htmlspecialchars($_GET['cari']) : '' ?>">
+    <button type="submit">Cari</button>
+</form>
+<div class="card-container">
+    <?php while ($row = mysqli_fetch_assoc($hasil)): ?>
+        <div class="card">
+            <h3><?= htmlspecialchars($row['title']) ?></h3>
+            <p><?= htmlspecialchars(substr($row['content'], 0, 60)) ?>...</p>
+            <a href="detail.php?id=<?= $row['id'] ?>">Baca Selengkapnya</a>
+        </div>
+    <?php endwhile; ?>
+</div>
+
+<div class="pagination">
+    <?php for ($i = 1; $i <= $totalHalaman; $i++): ?>
+        <a href="index.php?halaman=<?= $i ?><?= isset($_GET['cari']) ? '&cari=' . urlencode($_GET['cari']) : '' ?>"
+           class="<?= $i == $halaman ? 'active' : '' ?>">
+            <?= $i ?>
+        </a>
+    <?php endfor; ?>
+</div>
+
+<script>
+    setTimeout(function() {
+        const flash = document.getElementById('flash-message');
+        if (flash) {
+            flash.style.display = 'none';
+        }
+    }, 3000);
+</script>
+
+<?php include 'includes/footer.php'; ?>

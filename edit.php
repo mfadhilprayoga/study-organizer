@@ -1,5 +1,5 @@
 <?php
-require 'db_koneksi.php';
+require 'includes/db_koneksi.php';
 
 $id = $_GET['id'];
 
@@ -13,10 +13,12 @@ if (!$catatan) {
     die("Catatan tidak ditemukan.");
 }
 ?>
+<? include 'includes/header.php';?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Edit Catatan</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <a href="index.php">← Kembali ke Beranda</a>

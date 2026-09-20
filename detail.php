@@ -1,5 +1,5 @@
 <?php
-require 'db_koneksi.php';
+require 'includes/db_koneksi.php';
 
 $id = $_GET['id'];
 
@@ -13,19 +13,16 @@ if (!$catatan) {
     die("Catatan tidak ditemukan.");
 }
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title><?= htmlspecialchars($catatan['title']) ?></title>
-</head>
-<body>
-    <a href="index.php">← Kembali ke Beranda</a>
+<?php include 'includes/header.php'; ?>
 
+<a href="index.php">← Kembali ke Beranda</a>
+<div class="detail-box">
     <h1><?= htmlspecialchars($catatan['title']) ?></h1>
     <p><em><?= $catatan['created_at'] ?></em></p>
     <p><?= nl2br(htmlspecialchars($catatan['content'])) ?></p>
 
     <a href="edit.php?id=<?= $catatan['id'] ?>">Edit</a>
     <a href="hapus.php?id=<?= $catatan['id'] ?>">Hapus</a>
-</body>
-</html>
+</div>
+
+<?php include 'includes/footer.php'; ?>

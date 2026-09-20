@@ -1,5 +1,5 @@
 <?php
-require 'db_koneksi.php';
+require 'includes/db_koneksi.php';
 
 $id = $_POST['id'];
 $title = $_POST['title'];
