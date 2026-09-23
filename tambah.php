@@ -1,9 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Tambah Catatan</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+<?php
+require 'includes/auth_check.php';
+require 'includes/db_koneksi.php';
+?>
+<?php include 'includes/header.php'; ?>
+
+<a href="index.php">← Kembali ke Beranda</a>
+<h1>Tambah Catatan Baru</h1>
+
+<form action="simpan.php" method="POST">
+    <label>Judul</label><br>
+    <input type="text" name="title" required><br><br>
+
+    <label>Isi Catatan</label><br>
+    <textarea name="content" rows="5" required></textarea><br><br>
+
+    <button type="submit">Simpan</button>
+</form>
+
 <script>
 document.querySelector('form').addEventListener('submit', function(event) {
     const title = document.querySelector('input[name="title"]').value.trim();
@@ -23,18 +36,4 @@ document.querySelector('form').addEventListener('submit', function(event) {
 });
 </script>
 
-<body>
-    <a href="index.php">← Kembali ke Beranda</a>
-    <h1>Tambah Catatan Baru</h1>
-
-    <form action="simpan.php" method="POST">
-        <label>Judul</label><br>
-        <input type="text" name="title" required><br><br>
-
-        <label>Isi Catatan</label><br>
-        <textarea name="content" rows="5" required></textarea><br><br>
-
-        <button type="submit">Simpan</button>
-    </form>
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>

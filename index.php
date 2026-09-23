@@ -1,4 +1,5 @@
 <?php
+require 'includes/auth_check.php';
 require 'includes/db_koneksi.php';
 
 $per_halaman = 6;
@@ -7,20 +8,21 @@ $offset = ($halaman - 1) * $per_halaman;
 
 if (isset($_GET['cari']) && $_GET['cari'] !== '') {
     $keyword = '%' . $_GET['cari'] . '%';
-    $stmt = mysqli_prepare($koneksi, "SELECT * FROM notes WHERE title LIKE ? ORDER BY created_at DESC LIMIT ? OFFSET ?");
-    mysqli_stmt_bind_param($stmt, "sii", $keyword, $per_halaman, $offset);
+    $stmt = mysqli_prepare($koneksi, "SELECT * FROM notes WHERE user_id = ? AND title LIKE ? ORDER BY created_at DESC LIMIT ? OFFSET ?");
+    mysqli_stmt_bind_param($stmt, "isii", $_SESSION['user_id'], $keyword, $per_halaman, $offset);
     mysqli_stmt_execute($stmt);
     $hasil = mysqli_stmt_get_result($stmt);
 
-    $stmtTotal = mysqli_prepare($koneksi, "SELECT COUNT(*) as total FROM notes WHERE title LIKE ?");
-    mysqli_stmt_bind_param($stmtTotal, "s", $keyword);
+    $stmtTotal = mysqli_prepare($koneksi, "SELECT COUNT(*) as total FROM notes WHERE user_id = ? AND title LIKE ?");
+    mysqli_stmt_bind_param($stmtTotal, "is", $_SESSION['user_id'], $keyword);
 } else {
-    $stmt = mysqli_prepare($koneksi, "SELECT * FROM notes ORDER BY created_at DESC LIMIT ? OFFSET ?");
-    mysqli_stmt_bind_param($stmt, "ii", $per_halaman, $offset);
+    $stmt = mysqli_prepare($koneksi, "SELECT * FROM notes WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?");
+    mysqli_stmt_bind_param($stmt, "iii", $_SESSION['user_id'], $per_halaman, $offset);
     mysqli_stmt_execute($stmt);
     $hasil = mysqli_stmt_get_result($stmt);
 
-    $stmtTotal = mysqli_prepare($koneksi, "SELECT COUNT(*) as total FROM notes");
+    $stmtTotal = mysqli_prepare($koneksi, "SELECT COUNT(*) as total FROM notes WHERE user_id = ?");
+    mysqli_stmt_bind_param($stmtTotal, "i", $_SESSION['user_id']);
 }
 
 mysqli_stmt_execute($stmtTotal);
@@ -40,7 +42,7 @@ $totalHalaman = ceil($totalCatatan / $per_halaman);
             ✅ Catatan berhasil diperbarui!
         <?php elseif ($_GET['status'] == 'hapus'): ?>
             ✅ Catatan berhasil dihapus!
-        <?php endif; ?>
+        <?php endif; ?>f
     </div>
 <?php endif; ?>
 <form action="index.php" method="GET" style="margin-bottom: 15px;">
