@@ -8,6 +8,7 @@ require 'includes/db_koneksi.php';
 <h1>Tambah Catatan Baru</h1>
 
 <form action="simpan.php" method="POST">
+    <?= csrf_field() ?>
     <label>Judul</label><br>
     <input type="text" name="title" required><br><br>
 

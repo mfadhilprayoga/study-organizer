@@ -7,6 +7,7 @@ require 'includes/auth_check.php';
 <h1>Tambah Tugas Baru</h1>
 
 <form action="simpan_tugas.php" method="POST">
+    <?= csrf_field() ?>
     <label>Nama Tugas</label><br>
     <input type="text" name="title" required><br><br>
 

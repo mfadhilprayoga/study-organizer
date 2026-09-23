@@ -1,4 +1,5 @@
 <?php
+csrf_verify()
 require 'includes/db_koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

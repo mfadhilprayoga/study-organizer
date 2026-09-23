@@ -1,5 +1,6 @@
 <?php
 session_start();
+csrf_verify();
 require 'includes/db_koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -35,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <?php endif; ?>
 
 <form action="login.php" method="POST">
+    <?= csrf_field () ?>
     <label>Username</label><br>
     <input type="text" name="username" required><br><br>
 

@@ -21,7 +21,7 @@ if (!$tugas) {
 
 <form action="update_tugas.php" method="POST">
     <input type="hidden" name="id" value="<?= $tugas['id'] ?>">
-
+    <?= csrf_field () ?>
     <label>Nama Tugas</label><br>
     <input type="text" name="title" value="<?= htmlspecialchars($tugas['title']) ?>" required><br><br>
 

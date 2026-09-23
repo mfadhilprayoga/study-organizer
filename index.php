@@ -42,7 +42,7 @@ $totalHalaman = ceil($totalCatatan / $per_halaman);
             ✅ Catatan berhasil diperbarui!
         <?php elseif ($_GET['status'] == 'hapus'): ?>
             ✅ Catatan berhasil dihapus!
-        <?php endif; ?>f
+        <?php endif; ?>
     </div>
 <?php endif; ?>
 <form action="index.php" method="GET" style="margin-bottom: 15px;">

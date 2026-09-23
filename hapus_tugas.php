@@ -1,5 +1,6 @@
 <?php
 require 'includes/auth_check.php';
+csrf_verify();
 require 'includes/db_koneksi.php';
 
 $id = $_GET['id'];

@@ -1,11 +1,29 @@
 <?php
 require 'includes/auth_check.php';
+csrf_verify();
 require 'includes/db_koneksi.php';
 
 $id = $_POST['id'];
-$title = $_POST['title'];
+$title = trim($_POST['title']);
 $deadline = $_POST['deadline'];
 $status = $_POST['status'];
+
+if ($title === '' || strlen($title) > 150) {
+    die("Nama tugas tidak boleh kosong dan maksimal 150 karakter.");
+}
+
+$stmt = mysqli_prepare($koneksi, "SELECT task_date FROM tasks WHERE id = ? AND user_id = ?");
+mysqli_stmt_bind_param($stmt, "ii", $id, $_SESSION['user_id']);
+mysqli_stmt_execute($stmt);
+$tugasLama = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
+
+if (!$tugasLama) {
+    die("Tugas tidak ditemukan.");
+}
+
+if ($deadline < $tugasLama['task_date']) {
+    die("Deadline tidak boleh sebelum tanggal dibuat.");
+}
 
 $stmt = mysqli_prepare($koneksi, "UPDATE tasks SET title = ?, deadline = ?, status = ? WHERE id = ? AND user_id = ?");
 mysqli_stmt_bind_param($stmt, "sssii", $title, $deadline, $status, $id, $_SESSION['user_id']);
