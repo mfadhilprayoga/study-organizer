@@ -2,7 +2,7 @@
 
 Aplikasi sederhana untuk mengelola catatan dan tugas.
 
-Awalnya dibuat sebagai project belajar "Catatan Kuliah" menggunakan PHP dan MariaDB, lalu dikembangkan secara bertahap menjadi **Study Organizer** — sekaligus menjadi media belajar Web Development → Security → DevOps → DevSecOps.
+Awalnya dibuat sebagai project belajar "Catatan Kuliah" menggunakan PHP dan MariaDB, lalu dikembangkan secara bertahap menjadi **Study Organizer** 
 
 Target utama pengguna adalah mahasiswa, tetapi sistem tidak dibuat khusus untuk mahasiswa sehingga tetap dapat digunakan oleh siapa saja yang membutuhkan pengelolaan catatan dan tugas.
 
