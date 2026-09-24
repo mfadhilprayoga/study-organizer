@@ -1,8 +1,11 @@
 <?php
-csrf_verify()
+session_start();
+require 'includes/csrf.php';
 require 'includes/db_koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    csrf_verify();
+
     $username = trim($_POST['username']);
     $password = $_POST['password'];
 
@@ -28,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <?php endif; ?>
 
 <form action="register.php" method="POST">
+    <?= csrf_field() ?>
     <label>Username</label><br>
     <input type="text" name="username" required><br><br>
 
