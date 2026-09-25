@@ -1,9 +1,11 @@
 <?php
 session_start();
-csrf_verify();
+require 'includes/csrf.php';
 require 'includes/db_koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    csrf_verify();
+
     $username = trim($_POST['username']);
     $password = $_POST['password'];
 
@@ -16,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
-        header("Location: index.php");
+        header("Location: dashboard.php");
         exit;
     } else {
         $error = "Username atau password salah.";
@@ -36,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <?php endif; ?>
 
 <form action="login.php" method="POST">
-    <?= csrf_field () ?>
+    <?= csrf_field() ?>
     <label>Username</label><br>
     <input type="text" name="username" required><br><br>
 
