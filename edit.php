@@ -16,20 +16,30 @@ if (!$catatan) {
 ?>
 <?php include 'includes/header.php'; ?>
 
-<a href="index.php">← Kembali ke Beranda</a>
-<h1>Edit Catatan</h1>
+<section class="note-editor-page">
+    <header class="note-editor-heading">
+        <span class="note-editor-icon" aria-hidden="true">▣</span>
+        <div>
+            <h1>Edit Catatan</h1>
+            <p>Perbarui catatanmu di bawah ini.</p>
+        </div>
+    </header>
 
-<form action="update.php" method="POST">
-    <?= csrf_field() ?>
-    <input type="hidden" name="id" value="<?= $catatan['id'] ?>">
+    <form class="note-editor-form" action="update.php" method="POST">
+        <?= csrf_field() ?>
+        <input type="hidden" name="id" value="<?= $catatan['id'] ?>">
 
-    <label>Judul</label><br>
-    <input type="text" name="title" value="<?= htmlspecialchars($catatan['title']) ?>" required><br><br>
+        <label for="note-title">Judul Catatan</label>
+        <input id="note-title" type="text" name="title" value="<?= htmlspecialchars($catatan['title']) ?>" placeholder="Masukkan judul catatan..." required>
 
-    <label>Isi Catatan</label><br>
-    <textarea name="content" rows="5" required><?= htmlspecialchars($catatan['content']) ?></textarea><br><br>
+        <label for="note-content">Isi Catatan</label>
+        <textarea id="note-content" name="content" rows="6" placeholder="Tulis isi catatan di sini..." required><?= htmlspecialchars($catatan['content']) ?></textarea>
 
-    <button type="submit">Update</button>
-</form>
+        <div class="note-editor-actions">
+            <a class="cancel-button" href="index.php">Batal</a>
+            <button type="submit"><span aria-hidden="true">▣</span> Simpan Perubahan</button>
+        </div>
+    </form>
+</section>
 
 <?php include 'includes/footer.php'; ?>

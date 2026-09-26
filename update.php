@@ -9,10 +9,13 @@ $title = trim($_POST['title']);
 $content = trim($_POST['content']);
 
 $errorTitle = validasiJudulCatatan($title);
-if ($errorTitle) die($errorTitle);
-
 $errorContent = validasiIsiCatatan($content);
-if ($errorContent) die($errorContent);
+
+if ($errorTitle || $errorContent) {
+    $_SESSION['form_error'] = $errorTitle ?? $errorContent;
+    header("Location: edit.php?id=$id");
+    exit;
+}
 
 $stmt = mysqli_prepare($koneksi, "UPDATE notes SET title = ?, content = ? WHERE id = ? AND user_id = ?");
 mysqli_stmt_bind_param($stmt, "ssii", $title, $content, $id, $_SESSION['user_id']);

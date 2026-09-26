@@ -2,13 +2,19 @@
 require 'includes/auth_check.php';
 csrf_verify();
 require 'includes/db_koneksi.php';
+require 'includes/validasi.php';
 
-$title = $_POST['title'];
+$title = trim($_POST['title']);
 $task_date = $_POST['task_date'];
 $deadline = $_POST['deadline'];
 
-if ($deadline < $task_date) {
-    die("Deadline tidak boleh sebelum tanggal dibuat.");
+$errorTitle = validasiNamaTugas($title);
+$errorDeadline = validasiDeadlineTugas($task_date, $deadline);
+
+if ($errorTitle || $errorDeadline) {
+    $_SESSION['form_error'] = $errorTitle ?? $errorDeadline;
+    header("Location: tambah_tugas.php");
+    exit;
 }
 
 $stmt = mysqli_prepare($koneksi, "INSERT INTO tasks (user_id, title, task_date, deadline) VALUES (?, ?, ?, ?)");

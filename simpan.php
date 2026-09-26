@@ -8,10 +8,13 @@ $title = trim($_POST['title']);
 $content = trim($_POST['content']);
 
 $errorTitle = validasiJudulCatatan($title);
-if ($errorTitle) die($errorTitle);
-
 $errorContent = validasiIsiCatatan($content);
-if ($errorContent) die($errorContent);
+
+if ($errorTitle || $errorContent) {
+    $_SESSION['form_error'] = $errorTitle ?? $errorContent;
+    header("Location: tambah.php");
+    exit;
+}
 
 $stmt = mysqli_prepare($koneksi, "INSERT INTO notes (user_id, title, content) VALUES (?, ?, ?)");
 mysqli_stmt_bind_param($stmt, "iss", $_SESSION['user_id'], $title, $content);
