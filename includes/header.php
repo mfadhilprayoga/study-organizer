@@ -1,3 +1,4 @@
+<?php session_start();?>
 <?php
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
@@ -18,7 +19,7 @@ $pageTitles = [
     <title><?= isset($pageTitles[$currentPage]) ? $pageTitles[$currentPage] . ' | ' : '' ?>Study Organizer</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
+<body class="<?= in_array($currentPage, ['login.php','register.php']) ? 'login-view' : '' ?>">
 <div class="app-shell">
     <aside class="sidebar">
         <a class="brand" href="dashboard.php" aria-label="Study Organizer">
