@@ -1,4 +1,4 @@
-name: CI - PHP Syntax Check
+name: CI - PHP Syntax Check & Tests
 
 on:
   push:
@@ -17,8 +17,15 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.4'
+          extensions: mbstring, xml, dom
 
       - name: Check PHP syntax on all files
         run: |
           find . -name "*.php" -not -path "./vendor/*" -print0 | xargs -0 -n1 php -l
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Run PHPUnit tests
+        run: ./vendor/bin/phpunit tests
