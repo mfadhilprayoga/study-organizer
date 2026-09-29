@@ -61,6 +61,22 @@ Tampilan dan penggunaan aplikasi dibuat sederhana dan tidak membingungkan penggu
    ```
 5. Buka `http://localhost:8000` di browser.
 
+### Menjalankan dengan Docker (Alternatif)
+
+Cara ini tidak memerlukan instalasi PHP/MariaDB manual di komputer kamu.
+
+1. Pastikan Docker dan Docker Compose sudah terinstall.
+2. Jalankan:
+```bash
+   docker compose up --build
+```
+3. Import skema database (hanya perlu sekali, di percobaan pertama):
+```bash
+   docker compose exec -T db mariadb -u root -prootpassword catatan_kuliah < database.sql
+```
+4. Buka `http://localhost:8080` di browser.
+5. Untuk menghentikan: `docker compose down` (data tetap tersimpan berkat Docker volume).
+
 ## Roadmap Pengembangan
 
 Project ini dikembangkan bertahap, setiap tahap punya *Definition of Done* sendiri sebelum lanjut ke tahap berikutnya. Detail lengkap ada di [ROADMAP.md](ROADMAP.md).
