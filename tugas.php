@@ -8,7 +8,7 @@ if ($filter !== 'semua') {
     $stmt = mysqli_prepare($koneksi, "SELECT * FROM tasks WHERE user_id = ? AND status = ? ORDER BY deadline ASC");
     mysqli_stmt_bind_param($stmt, "is", $_SESSION['user_id'], $filter);
 } else {
-    $stmt = mysqli_prepare($koneksi, "SELECT * FROM tasks WHERE user_id = ? ORDER BY deadline ASC");
+    $stmt = mysqli_prepare($koneksi, "SELECT * FROM tasks WHERE user_id = ? ORDER BY CASE WHEN status = 'selesai' THEN 1 ELSE 0 END ASC, deadline ASC");
     mysqli_stmt_bind_param($stmt, "i", $_SESSION['user_id']);
 }
 mysqli_stmt_execute($stmt);
@@ -44,7 +44,7 @@ $hasil = mysqli_stmt_get_result($stmt);
                 <a href="tambah_tugas.php">＋ Tambah Tugas</a>
             </div>
         <?php else: while ($row = mysqli_fetch_assoc($hasil)): ?>
-            <article class="task-row">
+            <article class="task-row <?= $row['status'] === 'selesai' ? 'is-completed' : '' ?>">
                 <span class="task-row-check <?= $row['status'] === 'selesai' ? 'is-done' : '' ?>" aria-hidden="true"><?= $row['status'] === 'selesai' ? '✓' : '' ?></span>
                 <div class="task-row-copy">
                     <strong><?= htmlspecialchars($row['title']) ?></strong>
