@@ -36,3 +36,25 @@ function validasiDeadlineTugas($task_date, $deadline) {
     }
     return null;
 }
+
+function validasiEmail($email) {
+    $email = trim($email);
+    if ($email === '') {
+        return "Email tidak boleh kosong.";
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return "Format email tidak valid.";
+    }
+    return null;
+}
+
+function validasiNamaLengkap($nama) {
+    $nama = trim($nama);
+    if ($nama === '') {
+        return "Nama tidak boleh kosong.";
+    }
+    if (strlen($nama) > 100) {
+        return "Nama maksimal 100 karakter.";
+    }
+    return null;
+}

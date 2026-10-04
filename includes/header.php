@@ -8,6 +8,7 @@ $pageTitles = [
     'index.php' => 'Catatan',
     'tugas.php' => 'Tugas',
     'dashboard.php' => 'Beranda',
+    'profil.php' => 'Profil',
 ];
 ?>
 <!DOCTYPE html>
@@ -32,12 +33,11 @@ $pageTitles = [
             <span>Study <strong>Organizer</strong></span>
         </a>
         <nav class="main-nav" aria-label="Navigasi utama">
-            <a class="<?= $currentPage === 'dashboard.php' ? 'active' : '' ?>" href="dashboard.php"><span class="nav-icon">⌂</span>Beranda</a>
-            <a class="<?= $currentPage === 'index.php' ? 'active' : '' ?>" href="index.php"><span class="nav-icon">▣</span>Catatan</a>
-            <a class="<?= $currentPage === 'tugas.php' ? 'active' : '' ?>" href="tugas.php"><span class="nav-icon">☑</span>Tugas</a>
-            <a class="<?= in_array($currentPage, ['login.php', 'register.php']) ? 'active' : '' ?>" href="dashboard.php#profil"><span class="nav-icon">♙</span>Profil</a>
+            <a class="<?= $currentPage === 'dashboard.php' ? 'active' : '' ?>" href="dashboard.php"><span class="nav-icon" aria-hidden="true">🏠</span>Beranda</a>
+            <a class="<?= $currentPage === 'index.php' ? 'active' : '' ?>" href="index.php"><span class="nav-icon" aria-hidden="true">📝</span>Catatan</a>
+            <a class="<?= $currentPage === 'tugas.php' ? 'active' : '' ?>" href="tugas.php"><span class="nav-icon">✅</span>Tugas</a>
+            <a class="<?= $currentPage === 'profil.php' ? 'active' : '' ?>" href="profil.php"><span class="nav-icon">♙</span>Profil</a>
         </nav>
-        <a class="logout-link" href="logout.php"><span class="nav-icon">⇥</span>Logout</a>
     </aside>
     <main class="main-content">
         <header class="topbar">
@@ -49,4 +49,4 @@ $pageTitles = [
                 <span class="chevron">⌄</span>
             </div>
         </header>
-        <div class="page-content">
+        <div class="page-content <?= $currentPage === 'dashboard.php' ? 'dashboard-content' : '' ?>">
