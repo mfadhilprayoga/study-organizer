@@ -36,7 +36,13 @@ $totalHalaman = ceil($totalCatatan / $per_halaman);
 
 <section class="notes-page-header">
     <div class="notes-title">
-        <span class="notes-title-icon">▣</span>
+        <span class="notes-title-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" focusable="false">
+                <path d="M4 6.5c4.8-1.5 9-.8 12 1.8v18c-3-2.6-7.2-3.3-12-1.8v-18Z"/>
+                <path d="M28 6.5c-4.8-1.5-9-.8-12 1.8v18c3-2.6 7.2-3.3 12-1.8v-18Z"/>
+                <path d="M16 8.3v18"/>
+            </svg>
+        </span>
         <div>
             <h1>Catatan Saya</h1>
             <p>Kelola semua catatanmu di sini.</p>

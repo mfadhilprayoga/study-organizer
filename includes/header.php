@@ -1,4 +1,3 @@
-<?php session_start();?>
 <?php
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
@@ -9,6 +8,7 @@ $pageTitles = [
     'index.php' => 'Catatan',
     'tugas.php' => 'Tugas',
     'dashboard.php' => 'Beranda',
+    'profil.php' => 'Profil',
 ];
 ?>
 <!DOCTYPE html>
@@ -23,16 +23,21 @@ $pageTitles = [
 <div class="app-shell">
     <aside class="sidebar">
         <a class="brand" href="dashboard.php" aria-label="Study Organizer">
-            <span class="brand-mark" aria-hidden="true">◇</span>
+            <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 32 32" focusable="false">
+                    <path d="M4 6.5c4.8-1.5 9-.8 12 1.8v18c-3-2.6-7.2-3.3-12-1.8v-18Z"/>
+                    <path d="M28 6.5c-4.8-1.5-9-.8-12 1.8v18c3-2.6 7.2-3.3 12-1.8v-18Z"/>
+                    <path d="M16 8.3v18"/>
+                </svg>
+            </span>
             <span>Study <strong>Organizer</strong></span>
         </a>
         <nav class="main-nav" aria-label="Navigasi utama">
-            <a class="<?= $currentPage === 'dashboard.php' ? 'active' : '' ?>" href="dashboard.php"><span class="nav-icon">⌂</span>Beranda</a>
-            <a class="<?= $currentPage === 'index.php' ? 'active' : '' ?>" href="index.php"><span class="nav-icon">▣</span>Catatan</a>
-            <a class="<?= $currentPage === 'tugas.php' ? 'active' : '' ?>" href="tugas.php"><span class="nav-icon">☑</span>Tugas</a>
-            <a class="<?= in_array($currentPage, ['login.php', 'register.php']) ? 'active' : '' ?>" href="dashboard.php#profil"><span class="nav-icon">♙</span>Profil</a>
+            <a class="<?= $currentPage === 'dashboard.php' ? 'active' : '' ?>" href="dashboard.php"><span class="nav-icon" aria-hidden="true">🏠</span>Beranda</a>
+            <a class="<?= $currentPage === 'index.php' ? 'active' : '' ?>" href="index.php"><span class="nav-icon" aria-hidden="true">📝</span>Catatan</a>
+            <a class="<?= $currentPage === 'tugas.php' ? 'active' : '' ?>" href="tugas.php"><span class="nav-icon">✅</span>Tugas</a>
+            <a class="<?= $currentPage === 'profil.php' ? 'active' : '' ?>" href="profil.php"><span class="nav-icon">♙</span>Profil</a>
         </nav>
-        <a class="logout-link" href="logout.php"><span class="nav-icon">⇥</span>Logout</a>
     </aside>
     <main class="main-content">
         <header class="topbar">
@@ -44,4 +49,4 @@ $pageTitles = [
                 <span class="chevron">⌄</span>
             </div>
         </header>
-        <div class="page-content">
+        <div class="page-content <?= $currentPage === 'dashboard.php' ? 'dashboard-content' : '' ?>">

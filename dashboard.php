@@ -57,7 +57,7 @@ $tugasMendatang = mysqli_stmt_get_result($stmt);
         </div>
     </div>
     <div class="panel">
-        <div class="panel-heading"><h2>Tugas Mendatang</h2><a href="tugas.php">Lihat Semua <span>→</span></a></div>
+        <div class="panel-heading"><h2>Daftar Tugas</h2><a href="tugas.php">Lihat Semua <span>→</span></a></div>
         <div class="item-list">
         <?php if (mysqli_num_rows($tugasMendatang) === 0): ?>
             <p class="empty-state">Belum ada tugas.</p>
