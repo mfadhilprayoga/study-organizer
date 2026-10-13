@@ -17,7 +17,7 @@ if ($errorTitle || $errorContent) {
     exit;
 }
 
-$stmt = mysqli_prepare($koneksi, "UPDATE notes SET title = ?, content = ? WHERE id = ? AND user_id = ?");
+$stmt = mysqli_prepare($koneksi, "UPDATE notes SET title = ?, content = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?");
 mysqli_stmt_bind_param($stmt, "ssii", $title, $content, $id, $_SESSION['user_id']);
 mysqli_stmt_execute($stmt);
 
