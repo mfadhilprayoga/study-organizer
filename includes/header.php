@@ -25,7 +25,7 @@ $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
     <title><?= isset($pageTitles[$currentPage]) ? $pageTitles[$currentPage] . ' | ' : '' ?>Study Organizer</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
-<body class="<?= in_array($currentPage, ['login.php','register.php']) ? 'login-view' : ($currentPage === 'dashboard.php' ? 'dashboard-view' : '') ?>">
+<body class="<?= in_array($currentPage, ['login.php','register.php']) ? 'login-view' : ($currentPage === 'dashboard.php' ? 'dashboard-view' : (in_array($currentPage, ['index.php', 'detail.php'], true) ? 'notes-view' . ($currentPage === 'detail.php' ? ' detail-view' : '') : '')) ?>">
 <div class="app-shell">
     <aside class="sidebar">
         <a class="brand" href="dashboard.php" aria-label="Study Organizer">
@@ -44,7 +44,7 @@ $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
                 <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3.5 10 8.5-7 8.5 7v10a1 1 0 0 1-1 1h-5.2v-6.5h-4.6V21H4.5a1 1 0 0 1-1-1V10Z"/></svg></span>
                 <span class="nav-label">Beranda</span>
             </a>
-            <a class="<?= $currentPage === 'index.php' ? 'active' : '' ?>" href="index.php">
+            <a class="<?= in_array($currentPage, ['index.php', 'detail.php'], true) ? 'active' : '' ?>" href="index.php">
                 <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.5h8l4 4V20a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z"/><path d="M14.5 4v4h4M8.5 12h7M8.5 15.5h7"/></svg></span>
                 <span class="nav-label">Catatan</span>
             </a>
@@ -53,7 +53,7 @@ $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
                 <span class="nav-label">Tugas</span>
             </a>
             <a class="<?= $currentPage === 'profil.php' ? 'active' : '' ?>" href="profil.php">
-                <?php if ($currentPage === 'dashboard.php'): ?>
+                <?php if (in_array($currentPage, ['dashboard.php', 'index.php', 'detail.php'], true)): ?>
                     <span class="profile-avatar" aria-hidden="true"><?= htmlspecialchars($sessionInitial) ?></span>
                     <span class="nav-profile-copy"><span class="nav-label">Profil</span><small><?= htmlspecialchars($sessionDisplayName) ?></small></span>
                 <?php else: ?>
@@ -68,6 +68,10 @@ $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
             <span class="mobile-brand">Study <strong>Organizer</strong></span>
             <?php if ($currentPage === 'dashboard.php'): ?>
                 <h1 class="dashboard-topbar-title">Dashboard</h1>
+            <?php elseif ($currentPage === 'index.php'): ?>
+                <h1 class="notes-topbar-title">Catatan</h1>
+            <?php elseif ($currentPage === 'detail.php'): ?>
+                <h1 class="notes-topbar-title">Catatan</h1>
             <?php endif; ?>
             <div class="topbar-actions">
                 <button class="theme-button" type="button" aria-label="Ubah tema"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button>

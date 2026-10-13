@@ -1,6 +1,7 @@
 <?php
 require 'includes/auth_check.php';
 require 'includes/db_koneksi.php';
+require 'includes/date_helpers.php';
 
 $userId = $_SESSION['user_id'];
 
@@ -10,14 +11,6 @@ function countForUser(mysqli $koneksi, string $query, int $userId): int
     mysqli_stmt_bind_param($stmt, "i", $userId);
     mysqli_stmt_execute($stmt);
     return (int) mysqli_fetch_assoc(mysqli_stmt_get_result($stmt))['total'];
-}
-
-function formatTanggalIndonesia(string $value): string
-{
-    $date = new DateTimeImmutable($value);
-    $months = [1 => 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-
-    return $date->format('d') . ' ' . $months[(int) $date->format('n')] . ' ' . $date->format('Y');
 }
 
 $totalCatatan = countForUser($koneksi, "SELECT COUNT(*) AS total FROM notes WHERE user_id = ?", $userId);
