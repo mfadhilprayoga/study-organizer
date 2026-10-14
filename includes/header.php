@@ -2,6 +2,7 @@
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
+require_once __DIR__ . '/csrf.php';
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 $pageTitles = [
@@ -14,7 +15,6 @@ $sessionDisplayName = trim((string) ($_SESSION['nama'] ?? ''));
 if ($sessionDisplayName === '') {
     $sessionDisplayName = trim((string) ($_SESSION['username'] ?? 'Pengguna'));
 }
-$sessionDisplayName = ucwords(strtolower($sessionDisplayName));
 $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
 ?>
 <!DOCTYPE html>
@@ -25,7 +25,7 @@ $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
     <title><?= isset($pageTitles[$currentPage]) ? $pageTitles[$currentPage] . ' | ' : '' ?>Study Organizer</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
-<body class="<?= in_array($currentPage, ['login.php','register.php']) ? 'login-view' : ($currentPage === 'dashboard.php' ? 'dashboard-view' : (in_array($currentPage, ['index.php', 'detail.php', 'edit.php', 'tugas.php'], true) ? 'notes-view' . ($currentPage === 'detail.php' ? ' detail-view' : ($currentPage === 'edit.php' ? ' edit-view' : ($currentPage === 'tugas.php' ? ' tasks-view' : ''))) : '')) ?>">
+<body class="<?= in_array($currentPage, ['login.php','register.php']) ? 'login-view' : ($currentPage === 'dashboard.php' ? 'dashboard-view' : (in_array($currentPage, ['index.php', 'detail.php', 'edit.php', 'tugas.php', 'profil.php'], true) ? 'notes-view' . ($currentPage === 'detail.php' ? ' detail-view' : ($currentPage === 'edit.php' ? ' edit-view' : ($currentPage === 'tugas.php' ? ' tasks-view' : ($currentPage === 'profil.php' ? ' profile-view' : '')))) : '')) ?>">
 <div class="app-shell">
     <aside class="sidebar">
         <a class="brand" href="dashboard.php" aria-label="Study Organizer">
@@ -52,16 +52,28 @@ $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
                 <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m8 12 2.5 2.5L16 9"/></svg></span>
                 <span class="nav-label">Tugas</span>
             </a>
-            <a class="<?= $currentPage === 'profil.php' ? 'active' : '' ?>" href="profil.php">
-                <?php if (in_array($currentPage, ['dashboard.php', 'index.php', 'detail.php', 'edit.php', 'tugas.php'], true)): ?>
-                    <span class="profile-avatar" aria-hidden="true"><?= htmlspecialchars($sessionInitial) ?></span>
-                    <span class="nav-profile-copy"><span class="nav-label">Profil</span><small><?= htmlspecialchars($sessionDisplayName) ?></small></span>
-                <?php else: ?>
-                    <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c.5-3.4 3.3-5.5 7.5-5.5s7 2.1 7.5 5.5"/></svg></span>
-                    <span class="nav-profile-copy"><span class="nav-label">Profil</span><small><?= htmlspecialchars($sessionDisplayName) ?></small></span>
-                <?php endif; ?>
-            </a>
         </nav>
+        <div class="sidebar-account">
+            <button class="sidebar-account-trigger" id="sidebar-profile-trigger" type="button" aria-expanded="false" aria-controls="sidebar-profile-panel">
+                <span class="profile-avatar" aria-hidden="true"><?= htmlspecialchars($sessionInitial, ENT_QUOTES, 'UTF-8') ?></span>
+                <span class="nav-profile-copy"><span class="nav-label">Profil</span><small><?= htmlspecialchars($sessionDisplayName, ENT_QUOTES, 'UTF-8') ?></small></span>
+            </button>
+            <section class="sidebar-profile-panel" id="sidebar-profile-panel" aria-label="Menu akun" hidden>
+                <div class="sidebar-profile-summary">
+                    <span class="sidebar-profile-avatar" aria-hidden="true"><?= htmlspecialchars($sessionInitial, ENT_QUOTES, 'UTF-8') ?></span>
+                    <div>
+                        <strong><?= htmlspecialchars($sessionDisplayName, ENT_QUOTES, 'UTF-8') ?></strong>
+                        <span>@<?= htmlspecialchars((string) ($_SESSION['username'] ?? ''), ENT_QUOTES, 'UTF-8') ?></span>
+                        <span><?= htmlspecialchars((string) ($_SESSION['email'] ?? ''), ENT_QUOTES, 'UTF-8') ?></span>
+                    </div>
+                </div>
+                <a class="sidebar-profile-link" href="profil.php">Profil Saya</a>
+                <form class="sidebar-logout-form" action="logout.php" method="POST">
+                    <?= csrf_field() ?>
+                    <button class="sidebar-profile-logout" type="submit">Logout</button>
+                </form>
+            </section>
+        </div>
     </aside>
     <main class="main-content">
         <header class="topbar">
