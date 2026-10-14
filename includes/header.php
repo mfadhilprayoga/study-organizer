@@ -25,7 +25,7 @@ $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
     <title><?= isset($pageTitles[$currentPage]) ? $pageTitles[$currentPage] . ' | ' : '' ?>Study Organizer</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
-<body class="<?= in_array($currentPage, ['login.php','register.php']) ? 'login-view' : ($currentPage === 'dashboard.php' ? 'dashboard-view' : (in_array($currentPage, ['index.php', 'detail.php', 'edit.php'], true) ? 'notes-view' . ($currentPage === 'detail.php' ? ' detail-view' : ($currentPage === 'edit.php' ? ' edit-view' : '')) : '')) ?>">
+<body class="<?= in_array($currentPage, ['login.php','register.php']) ? 'login-view' : ($currentPage === 'dashboard.php' ? 'dashboard-view' : (in_array($currentPage, ['index.php', 'detail.php', 'edit.php', 'tugas.php'], true) ? 'notes-view' . ($currentPage === 'detail.php' ? ' detail-view' : ($currentPage === 'edit.php' ? ' edit-view' : ($currentPage === 'tugas.php' ? ' tasks-view' : ''))) : '')) ?>">
 <div class="app-shell">
     <aside class="sidebar">
         <a class="brand" href="dashboard.php" aria-label="Study Organizer">
@@ -53,7 +53,7 @@ $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
                 <span class="nav-label">Tugas</span>
             </a>
             <a class="<?= $currentPage === 'profil.php' ? 'active' : '' ?>" href="profil.php">
-                <?php if (in_array($currentPage, ['dashboard.php', 'index.php', 'detail.php', 'edit.php'], true)): ?>
+                <?php if (in_array($currentPage, ['dashboard.php', 'index.php', 'detail.php', 'edit.php', 'tugas.php'], true)): ?>
                     <span class="profile-avatar" aria-hidden="true"><?= htmlspecialchars($sessionInitial) ?></span>
                     <span class="nav-profile-copy"><span class="nav-label">Profil</span><small><?= htmlspecialchars($sessionDisplayName) ?></small></span>
                 <?php else: ?>
@@ -74,6 +74,8 @@ $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
                 <h1 class="notes-topbar-title">Catatan</h1>
             <?php elseif ($currentPage === 'edit.php'): ?>
                 <h1 class="notes-topbar-title">Catatan</h1>
+            <?php elseif ($currentPage === 'tugas.php'): ?>
+                <h1 class="notes-topbar-title">Tugas</h1>
             <?php endif; ?>
             <div class="topbar-actions">
                 <button class="theme-button" type="button" aria-label="Ubah tema"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button>

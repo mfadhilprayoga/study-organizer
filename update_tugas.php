@@ -4,10 +4,16 @@ csrf_verify();
 require 'includes/db_koneksi.php';
 require 'includes/validasi.php';
 
-$id = $_POST['id'];
+$id = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 $title = trim($_POST['title']);
 $deadline = $_POST['deadline'];
 $status = $_POST['status'];
+
+if ($id === false || !in_array($status, ['belum', 'progres', 'selesai'], true)) {
+    $_SESSION['form_error'] = 'ID atau status tugas tidak valid.';
+    header("Location: tugas.php");
+    exit;
+}
 
 $stmt = mysqli_prepare($koneksi, "SELECT task_date FROM tasks WHERE id = ? AND user_id = ?");
 mysqli_stmt_bind_param($stmt, "ii", $id, $_SESSION['user_id']);

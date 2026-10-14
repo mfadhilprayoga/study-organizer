@@ -73,7 +73,7 @@ $statusLabels = ['belum' => 'Belum', 'progres' => 'Proses', 'selesai' => 'Selesa
         <?php if (mysqli_num_rows($tugasMendatang) === 0): ?>
             <p class="empty-state">Belum ada tugas.</p>
         <?php else: while ($task = mysqli_fetch_assoc($tugasMendatang)): ?>
-            <a class="list-item task-list-item" href="edit_tugas.php?id=<?= htmlspecialchars((string) $task['id'], ENT_QUOTES, 'UTF-8') ?>">
+            <a class="list-item task-list-item" href="tugas.php?edit=<?= htmlspecialchars((string) $task['id'], ENT_QUOTES, 'UTF-8') ?>">
                 <span class="task-check" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m8.5 12.25 2.25 2.25 4.75-5"/></svg></span>
                 <span class="item-copy"><strong><?= htmlspecialchars($task['title'], ENT_QUOTES, 'UTF-8') ?></strong><small><?= htmlspecialchars(formatTanggalIndonesia($task['deadline']), ENT_QUOTES, 'UTF-8') ?></small></span>
                 <span class="status-pill status-<?= htmlspecialchars($task['status'], ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($statusLabels[$task['status']], ENT_QUOTES, 'UTF-8') ?></span>
