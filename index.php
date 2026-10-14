@@ -88,7 +88,7 @@ $totalHalaman = ceil($totalCatatan / $per_halaman);
                         <a href="edit.php?id=<?= htmlspecialchars((string) $row['id'], ENT_QUOTES, 'UTF-8') ?>" aria-label="Edit <?= htmlspecialchars($row['title']) ?>">
                             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6.5 3 3M4 20l4.1-.9L19 8.2a2.1 2.1 0 0 0-3-3L5.1 16.1 4 20Z"/></svg>
                         </a>
-                        <a class="delete-action" href="hapus.php?id=<?= htmlspecialchars((string) $row['id'], ENT_QUOTES, 'UTF-8') ?>" aria-label="Hapus <?= htmlspecialchars($row['title']) ?>">
+                        <a class="delete-action note-delete-trigger" href="hapus.php?id=<?= htmlspecialchars((string) $row['id'], ENT_QUOTES, 'UTF-8') ?>" aria-label="Hapus <?= htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8') ?>" aria-haspopup="dialog" aria-controls="note-delete-modal" data-note-title="<?= htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8') ?>">
                             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M5.5 7l1 13h11l1-13M9 7V4h6v3"/></svg>
                         </a>
                     </span>
@@ -106,6 +106,8 @@ $totalHalaman = ceil($totalCatatan / $per_halaman);
         <?php endfor; ?>
     </div><?php endif; ?>
 </div>
+
+<?php include 'includes/note_delete_modal.php'; ?>
 
 <script>
     setTimeout(function() {
