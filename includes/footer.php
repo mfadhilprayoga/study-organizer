@@ -3,6 +3,18 @@
 </div>
 <script>
 (() => {
+    document.querySelectorAll('[data-toggle-password]').forEach((toggle) => {
+        toggle.addEventListener('click', () => {
+            const passwordInput = toggle.closest('.auth-password-control')?.querySelector('input');
+            if (!passwordInput) return;
+
+            const showPassword = passwordInput.type === 'password';
+            passwordInput.type = showPassword ? 'text' : 'password';
+            toggle.setAttribute('aria-pressed', String(showPassword));
+            toggle.setAttribute('aria-label', showPassword ? 'Sembunyikan password' : 'Tampilkan password');
+        });
+    });
+
     const profileTrigger = document.getElementById('sidebar-profile-trigger');
     const profilePanel = document.getElementById('sidebar-profile-panel');
 
