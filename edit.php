@@ -17,27 +17,32 @@ if (!$catatan) {
 <?php include 'includes/header.php'; ?>
 
 <section class="note-editor-page">
+    <a class="note-editor-back" href="index.php">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m11 5-7 7 7 7M4 12h16"/></svg>
+        Kembali ke Catatan
+    </a>
     <header class="note-editor-heading">
-        <span class="note-editor-icon" aria-hidden="true">▣</span>
-        <div>
-            <h1>Edit Catatan</h1>
-            <p>Perbarui catatanmu di bawah ini.</p>
-        </div>
+        <h1>Edit Catatan</h1>
+        <p>Ubah isi catatanmu di sini.</p>
     </header>
 
     <form class="note-editor-form" action="update.php" method="POST">
         <?= csrf_field() ?>
         <input type="hidden" name="id" value="<?= $catatan['id'] ?>">
 
-        <label for="note-title">Judul Catatan</label>
-        <input id="note-title" type="text" name="title" value="<?= htmlspecialchars($catatan['title']) ?>" placeholder="Masukkan judul catatan..." required>
+        <div class="note-editor-field">
+            <label for="note-title">Judul Catatan</label>
+            <input id="note-title" type="text" name="title" value="<?= htmlspecialchars($catatan['title'], ENT_QUOTES, 'UTF-8') ?>" placeholder="Masukkan judul catatan..." required>
+        </div>
 
-        <label for="note-content">Isi Catatan</label>
-        <textarea id="note-content" name="content" rows="6" placeholder="Tulis isi catatan di sini..." required><?= htmlspecialchars($catatan['content']) ?></textarea>
+        <div class="note-editor-field">
+            <label for="note-content">Isi Catatan</label>
+            <textarea id="note-content" name="content" rows="10" placeholder="Tulis isi catatan di sini..." required><?= htmlspecialchars($catatan['content'], ENT_QUOTES, 'UTF-8') ?></textarea>
+        </div>
 
         <div class="note-editor-actions">
             <a class="cancel-button" href="index.php">Batal</a>
-            <button type="submit"><span aria-hidden="true">▣</span> Simpan Perubahan</button>
+            <button type="submit">Simpan Perubahan</button>
         </div>
     </form>
 </section>

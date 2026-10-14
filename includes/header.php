@@ -25,7 +25,7 @@ $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
     <title><?= isset($pageTitles[$currentPage]) ? $pageTitles[$currentPage] . ' | ' : '' ?>Study Organizer</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
-<body class="<?= in_array($currentPage, ['login.php','register.php']) ? 'login-view' : ($currentPage === 'dashboard.php' ? 'dashboard-view' : (in_array($currentPage, ['index.php', 'detail.php'], true) ? 'notes-view' . ($currentPage === 'detail.php' ? ' detail-view' : '') : '')) ?>">
+<body class="<?= in_array($currentPage, ['login.php','register.php']) ? 'login-view' : ($currentPage === 'dashboard.php' ? 'dashboard-view' : (in_array($currentPage, ['index.php', 'detail.php', 'edit.php'], true) ? 'notes-view' . ($currentPage === 'detail.php' ? ' detail-view' : ($currentPage === 'edit.php' ? ' edit-view' : '')) : '')) ?>">
 <div class="app-shell">
     <aside class="sidebar">
         <a class="brand" href="dashboard.php" aria-label="Study Organizer">
@@ -53,7 +53,7 @@ $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
                 <span class="nav-label">Tugas</span>
             </a>
             <a class="<?= $currentPage === 'profil.php' ? 'active' : '' ?>" href="profil.php">
-                <?php if (in_array($currentPage, ['dashboard.php', 'index.php', 'detail.php'], true)): ?>
+                <?php if (in_array($currentPage, ['dashboard.php', 'index.php', 'detail.php', 'edit.php'], true)): ?>
                     <span class="profile-avatar" aria-hidden="true"><?= htmlspecialchars($sessionInitial) ?></span>
                     <span class="nav-profile-copy"><span class="nav-label">Profil</span><small><?= htmlspecialchars($sessionDisplayName) ?></small></span>
                 <?php else: ?>
@@ -71,6 +71,8 @@ $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
             <?php elseif ($currentPage === 'index.php'): ?>
                 <h1 class="notes-topbar-title">Catatan</h1>
             <?php elseif ($currentPage === 'detail.php'): ?>
+                <h1 class="notes-topbar-title">Catatan</h1>
+            <?php elseif ($currentPage === 'edit.php'): ?>
                 <h1 class="notes-topbar-title">Catatan</h1>
             <?php endif; ?>
             <div class="topbar-actions">
