@@ -56,6 +56,41 @@
             editProfileForm.querySelector('input[name="nama"]').focus();
         });
     }
+
+    const deleteAccountDialog = document.getElementById('account-delete-dialog');
+    const openDeleteAccount = document.getElementById('open-account-delete');
+
+    if (deleteAccountDialog && openDeleteAccount) {
+        const closeDeleteAccount = () => {
+            deleteAccountDialog.close();
+            openDeleteAccount.focus();
+        };
+
+        openDeleteAccount.addEventListener('click', () => {
+            deleteAccountDialog.showModal();
+            deleteAccountDialog.querySelector('[name="current_password"]').focus();
+        });
+
+        deleteAccountDialog.querySelectorAll('[data-close-account-delete]').forEach((button) => {
+            button.addEventListener('click', closeDeleteAccount);
+        });
+
+        deleteAccountDialog.addEventListener('click', (event) => {
+            if (event.target === deleteAccountDialog) closeDeleteAccount();
+        });
+
+        deleteAccountDialog.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                closeDeleteAccount();
+            }
+        });
+
+        if (deleteAccountDialog.dataset.reopen === 'true') {
+            deleteAccountDialog.showModal();
+            deleteAccountDialog.querySelector('[name="current_password"]').focus();
+        }
+    }
 })();
 </script>
 </body>

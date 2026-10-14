@@ -52,6 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <?php if (($_GET['status'] ?? '') === 'daftar_sukses'): ?>
             <p class="auth-message auth-message-success" role="status">Pendaftaran berhasil. Silakan login.</p>
+        <?php elseif (($_GET['status'] ?? '') === 'akun_dihapus'): ?>
+            <p class="auth-message auth-message-success" role="status">Akun dan data terkait berhasil dihapus.</p>
         <?php endif; ?>
         <?php if (isset($error)): ?>
             <p class="auth-message auth-message-error" role="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></p>
