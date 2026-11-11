@@ -10,6 +10,7 @@ $pageTitles = [
     'tugas.php' => 'Tugas',
     'dashboard.php' => 'Dashboard',
     'profil.php' => 'Profil',
+    'tambah.php' => 'Catatan',
 ];
 $sessionDisplayName = trim((string) ($_SESSION['nama'] ?? ''));
 if ($sessionDisplayName === '') {
@@ -23,9 +24,9 @@ $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($pageTitles[$currentPage]) ? $pageTitles[$currentPage] . ' | ' : '' ?>Study Organizer</title>
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/style.css?v=<?= filemtime(__DIR__ . '/../assets/style.css') ?>">
 </head>
-<body class="<?= in_array($currentPage, ['login.php','register.php']) ? 'login-view' : ($currentPage === 'dashboard.php' ? 'dashboard-view' : (in_array($currentPage, ['index.php', 'detail.php', 'edit.php', 'tugas.php', 'profil.php'], true) ? 'notes-view' . ($currentPage === 'detail.php' ? ' detail-view' : ($currentPage === 'edit.php' ? ' edit-view' : ($currentPage === 'tugas.php' ? ' tasks-view' : ($currentPage === 'profil.php' ? ' profile-view' : '')))) : '')) ?>">
+<body class="<?= in_array($currentPage, ['login.php','register.php']) ? 'login-view' : ($currentPage === 'dashboard.php' ? 'dashboard-view' : (in_array($currentPage, ['index.php', 'detail.php', 'edit.php', 'tambah.php', 'tugas.php', 'profil.php'], true) ? 'notes-view' . ($currentPage === 'detail.php' ? ' detail-view' : ($currentPage === 'edit.php' ? ' edit-view' : ($currentPage === 'tambah.php' ? ' add-note-view' : ($currentPage === 'tugas.php' ? ' tasks-view' : ($currentPage === 'profil.php' ? ' profile-view' : ''))))) : '')) ?>">
 <div class="app-shell">
     <aside class="sidebar">
         <a class="brand" href="dashboard.php" aria-label="Study Organizer">
@@ -44,7 +45,7 @@ $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
                 <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3.5 10 8.5-7 8.5 7v10a1 1 0 0 1-1 1h-5.2v-6.5h-4.6V21H4.5a1 1 0 0 1-1-1V10Z"/></svg></span>
                 <span class="nav-label">Beranda</span>
             </a>
-            <a class="<?= in_array($currentPage, ['index.php', 'detail.php'], true) ? 'active' : '' ?>" href="index.php">
+            <a class="<?= in_array($currentPage, ['index.php', 'detail.php', 'tambah.php'], true) ? 'active' : '' ?>" href="index.php">
                 <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.5h8l4 4V20a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z"/><path d="M14.5 4v4h4M8.5 12h7M8.5 15.5h7"/></svg></span>
                 <span class="nav-label">Catatan</span>
             </a>
@@ -85,6 +86,8 @@ $sessionInitial = strtoupper(substr($sessionDisplayName, 0, 1));
             <?php elseif ($currentPage === 'detail.php'): ?>
                 <h1 class="notes-topbar-title">Catatan</h1>
             <?php elseif ($currentPage === 'edit.php'): ?>
+                <h1 class="notes-topbar-title">Catatan</h1>
+            <?php elseif ($currentPage === 'tambah.php'): ?>
                 <h1 class="notes-topbar-title">Catatan</h1>
             <?php elseif ($currentPage === 'tugas.php'): ?>
                 <h1 class="notes-topbar-title">Tugas</h1>

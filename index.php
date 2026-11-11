@@ -67,7 +67,7 @@ $totalHalaman = ceil($totalCatatan / $per_halaman);
         </div>
     <?php endif; ?>
     <?php if ($hasSearch): ?>
-        <p class="search-summary">Menampilkan hasil pencarian untuk <strong>"<?= htmlspecialchars($searchTerm) ?>"</strong></p>
+        <p class="search-summary">Menampikan hasil pencarian untuk <strong>"<?= htmlspecialchars($searchTerm) ?>"</strong></p>
     <?php endif; ?>
     <div class="notes-list">
         <?php if (mysqli_num_rows($hasil) === 0): ?>

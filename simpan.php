@@ -12,6 +12,14 @@ $errorContent = validasiIsiCatatan($content);
 
 if ($errorTitle || $errorContent) {
     $_SESSION['form_error'] = $errorTitle ?? $errorContent;
+    $_SESSION['form_errors'] = [
+        'title' => $errorTitle,
+        'content' => $errorContent,
+    ];
+    $_SESSION['form_values'] = [
+        'title' => $title,
+        'content' => $content,
+    ];
     header("Location: tambah.php");
     exit;
 }
